@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="cad_module_name">Custom Alert Dialog</string>
+    <string name="ok">Tamam</string>
+    <string name="yes">Evet</string>
+    <string name="no">Hayır</string>
+    <string name="go_on">Devam</string>
+    <string name="cancel">Vazgeç</string>
+
+    <!--  Content Descriptions  -->
+    <string name="image_button_1">resimli buton 1</string>
+    <string name="image_button_2">resimli buton 2</string>
+    <string name="image_button_3">resimli buton 3</string>
+    <string name="image_button_4">resimli buton 4</string>
+    <string name="image_button_5">resimli buton 5</string>
+
+</resources>

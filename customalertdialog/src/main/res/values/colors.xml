@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="cad_bg_color">#212121</color>
+    <color name="cad_text_color">#ECECEC</color>
+    <color name="cad_icon_tint_color">@color/cad_text_color</color>
+    <color name="cad_error_color">#DF4040</color>
+    <color name="cad_warning_color">#D8AA02</color>
+    <color name="cad_success_color">#22AC15</color>
+    <color name="cad_info_color">#3852E8</color>
+    <color name="cad_neutral_color">#535353</color>
+    <color name="cad_positive_btn_default_bg_color">#4E308F</color>
+
+    <color name="cad_dialog_bg_color">#024F57</color>
+    <color name="cad_positive_button_bg_color">#018536</color>
+    <color name="cad_negative_button_stroke_color">#0C7E8B</color>
+</resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="cad_corner_radius">@dimen/_10sdp</dimen>
+    <dimen name="cad_btn_corner_radius">@dimen/_5sdp</dimen>
+    <dimen name="cad_item_padding">@dimen/_8sdp</dimen>
+    <dimen name="cad_icon_size">@dimen/_40sdp</dimen>
+    <dimen name="cad_text_size">@dimen/_13ssp</dimen>
+    <dimen name="cad_btn_text_size">@dimen/_12ssp</dimen>
+</resources>
