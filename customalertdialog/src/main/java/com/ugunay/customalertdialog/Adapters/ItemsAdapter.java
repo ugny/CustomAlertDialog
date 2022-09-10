@@ -1,11 +1,11 @@
 package com.ugunay.customalertdialog.Adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,18 +19,15 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsViewHol
     private final CustomAlertDialog.OnItemClickListener onItemClickListener;
     private final CustomAlertDialog dialog;
     private final int messageTextColor;
-    private final AppCompatActivity activity;
     private final int fontResId;
     private final boolean isLocalTypeface;
 
     public ItemsAdapter(CharSequence[] items, CustomAlertDialog.OnItemClickListener onItemClickListener,
-                        CustomAlertDialog dialog, int messageTextColor,
-                        AppCompatActivity activity, int fontResId) {
+                        CustomAlertDialog dialog, int messageTextColor, int fontResId) {
         this.items = items;
         this.onItemClickListener = onItemClickListener;
         this.dialog = dialog;
         this.messageTextColor = messageTextColor;
-        this.activity = activity;
         this.fontResId = fontResId;
         isLocalTypeface = fontResId == R.font.imprima;
     }
@@ -56,10 +53,12 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsViewHol
     class ItemsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private final ListItemBinding binding;
+        private final Context context;
 
         public ItemsViewHolder(@NonNull ListItemBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
+            context = binding.getRoot().getContext();
             itemView.setOnClickListener(this);
         }
 
@@ -68,7 +67,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemsViewHol
             binding.txtItem.setTextColor(messageTextColor);
 
             if (!isLocalTypeface) {
-                binding.txtItem.setTypeface(ResourcesCompat.getFont(activity, fontResId));
+                binding.txtItem.setTypeface(ResourcesCompat.getFont(context, fontResId));
             }
         }
 

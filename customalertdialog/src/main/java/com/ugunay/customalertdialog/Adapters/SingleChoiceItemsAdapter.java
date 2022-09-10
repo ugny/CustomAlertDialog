@@ -1,12 +1,12 @@
 package com.ugunay.customalertdialog.Adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,19 +21,16 @@ public class SingleChoiceItemsAdapter extends RecyclerView.Adapter<SingleChoiceI
     private final CustomAlertDialog.OnItemClickListener onItemClickListener;
     private final CustomAlertDialog dialog;
     private final int messageTextColor;
-    private final AppCompatActivity activity;
     private final int fontResId;
     private final boolean isLocalTypeface;
 
     public SingleChoiceItemsAdapter(CharSequence[] items, int checkedItemIndex,
                                     CustomAlertDialog.OnItemClickListener onItemClickListener,
-                                    CustomAlertDialog dialog, int messageTextColor,
-                                    AppCompatActivity activity, int fontResId) {
+                                    CustomAlertDialog dialog, int messageTextColor, int fontResId) {
         this.items = items;
         this.onItemClickListener = onItemClickListener;
         this.dialog = dialog;
         this.messageTextColor = messageTextColor;
-        this.activity = activity;
         this.fontResId = fontResId;
         isLocalTypeface = fontResId == R.font.imprima;
 
@@ -67,10 +64,12 @@ public class SingleChoiceItemsAdapter extends RecyclerView.Adapter<SingleChoiceI
     class SingleChoiceItemsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private final SingleChoiceItemBinding binding;
+        private final Context context;
 
         public SingleChoiceItemsViewHolder(@NonNull SingleChoiceItemBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
+            context = binding.getRoot().getContext();
             binding.rdoBtnItem.setOnClickListener(this);
         }
 
@@ -85,7 +84,7 @@ public class SingleChoiceItemsAdapter extends RecyclerView.Adapter<SingleChoiceI
             }
 
             if (!isLocalTypeface) {
-                binding.rdoBtnItem.setTypeface(ResourcesCompat.getFont(activity, fontResId));
+                binding.rdoBtnItem.setTypeface(ResourcesCompat.getFont(context, fontResId));
             }
         }
 

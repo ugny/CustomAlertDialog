@@ -1,10 +1,11 @@
 package com.ugunay.customalertdialog;
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
 import org.jetbrains.annotations.Contract;
@@ -15,16 +16,18 @@ import org.jetbrains.annotations.Contract;
  */
 class Tester {
 
-    private final AppCompatActivity activity;
+    private final Context context;
+    private final Resources res;
     private final int ICON;
 
     /**
      * Constructor method.
      *
-     * @param activity parent activity.
+     * @param context parent context.
      */
-    public Tester(@NonNull AppCompatActivity activity) {
-        this.activity = activity;
+    public Tester(@NonNull Context context) {
+        this.context = context;
+        res = context.getResources();
         ICON = R.drawable.ic_report;
     }
 
@@ -67,7 +70,7 @@ class Tester {
         String message = "CustomAlertDialog kütüphanesinin varsayılan değerleriyle oluşturulmuş " +
                 "bir alert dialog örneğidir. Yazılımcı sınıf değişkenlerine herhangi bir atama " +
                 "yapmadığında varsayılan değerler geçerli olacaktır.";
-        CustomAlertDialog alertDialog = CustomAlertDialog.getInstance(activity);
+        CustomAlertDialog alertDialog = CustomAlertDialog.getInstance(context);
         alertDialog.setIcon(ICON)
                 .setMessage(message)
                 .setPositiveButton("Onayla", dialog -> {
@@ -86,14 +89,10 @@ class Tester {
      * renkleri bir kez tanımlayarak projenin her yerinde aynı tasarımı kullanabilir.
      */
     private void setColors() {
-        CustomAlertDialog.setBackgroundColor(
-                activity.getResources().getColor(R.color.cad_dialog_bg_color));
+        CustomAlertDialog.setBackgroundColor(res.getColor(R.color.cad_dialog_bg_color));
         CustomAlertDialog.setMessageTextColor(Color.parseColor("#EDEDED"));
-        CustomAlertDialog.setPositiveButtonBackgroundColor(
-                activity.getResources().getColor(R.color.cad_positive_button_bg_color));
-        CustomAlertDialog.setNegativeButtonStrokeColor(
-                activity.getResources().getColor(R.color.cad_negative_button_stroke_color));
-
+        CustomAlertDialog.setPositiveButtonBackgroundColor(res.getColor(R.color.cad_positive_button_bg_color));
+        CustomAlertDialog.setNegativeButtonStrokeColor(res.getColor(R.color.cad_negative_button_stroke_color));
         CustomAlertDialog.setFontResId(R.font.titillium_regular);
         CustomAlertDialog.setInfoColor(Color.CYAN);
     }
@@ -109,38 +108,38 @@ class Tester {
                 "int iconResId, int iconTintAndTextPositiveButtonTextColor) fonksiyonu: " +
                 "İkon tint ve text pozitif butonun metin rengi aynı olan hazır bir alert dialog " +
                 "tasarımıdır. Bu örnekte mesaj metin rengi de aynı verilmiştir.";
-        CustomAlertDialog.getInstance(activity).showPreparedDialog(message,
-                activity.getResources().getColor(R.color.purple_200), R.drawable.ic_report,
-                activity.getResources().getColor(R.color.purple_200));
+        CustomAlertDialog.getInstance(context).showPreparedDialog(message,
+                res.getColor(R.color.purple_200), R.drawable.ic_report,
+                res.getColor(R.color.purple_200));
 
         String message_0 = "showPreparedDialog(@NonNull String message, int iconResId, " +
                 "int iconTintAndTextPositiveButtonTextColor) fonksiyonu: İkon tint ve text pozitif " +
                 "butonun metin rengi aynı olan hazır bir alert dialog tasarımıdır.";
-        CustomAlertDialog.getInstance(activity).showPreparedDialog(message_0, R.drawable.ic_report,
-                activity.getResources().getColor(R.color.purple_200));
+        CustomAlertDialog.getInstance(context).showPreparedDialog(
+                message_0, R.drawable.ic_report, res.getColor(R.color.purple_200));
 
         String message_1 = "showInfoDialog(@NonNull String message) fonksiyonu: Kullanıcıya herhangi " +
                 "bir konuda bilgilendirme yapmak için kullanılan hazır bir alert dialog tasarımıdır. " +
                 "Sadece mesaj bilgisini parametre olarak alır.";
-        CustomAlertDialog.getInstance(activity).showInfoDialog(message_1);
+        CustomAlertDialog.getInstance(context).showInfoDialog(message_1);
 
         String message_2 = "showSuccessDialog(@NonNull String message) fonksiyonu: " +
                 "Kullanıcıya başarılı bir işlem sonucunu bildirmek için kullanılan hazır " +
                 "bir alert dialog tasarımıdır. Sadece mesaj bilgisini parametre olarak alır.";
-        CustomAlertDialog.getInstance(activity).showSuccessDialog(message_2);
+        CustomAlertDialog.getInstance(context).showSuccessDialog(message_2);
 
         String message_3 = "showErrorDialog(@NonNull String message) fonksiyonu: Kullanıcıya " +
                 "hatalı bir işlem sonucunu bildirmek için kullanılan hazır bir alert dialog " +
                 "tasarımıdır. Sadece mesaj bilgisini parametre olarak alır.";
-        CustomAlertDialog.getInstance(activity).showErrorDialog(message_3);
+        CustomAlertDialog.getInstance(context).showErrorDialog(message_3);
 
         String message_4 = "showWarningDialog(@NonNull String message, @NonNull String " +
                 "positiveButtonTitle, @NonNull OnClickListener positiveButtonOnClickListener) " +
                 "fonksiyonu: Kullanıcıya herhangi bir konuda uyarıda bulunmak için kullanılan " +
                 "hazır bir alert dialog tasarımıdır. Mesaj, pozitif buton title ve pozitif butona " +
                 "tıklama olayını parametre olarak alır.";
-        CustomAlertDialog.getInstance(activity).showWarningDialog(message_4,
-                activity.getString(R.string.go_on), CustomAlertDialog::dismiss);
+        CustomAlertDialog.getInstance(context).showWarningDialog(message_4,
+                context.getString(R.string.go_on), CustomAlertDialog::dismiss);
     }
 
     /**
@@ -153,25 +152,25 @@ class Tester {
                 "renkleri istenirse örnekte de olduğu gibi farklı verilebilir. " +
                 "Verilmezse yazılımcının seçtiği renklere göre varsayılan rekler geçerli olacaktır. " +
                 "Pozitif ve negatif butonların başlıklarının kısa olması tavsiye edilir.";
-        CustomAlertDialog.getInstance(activity)
+        CustomAlertDialog.getInstance(context)
                 .setIcon(ICON)
                 .setMessage(message_1)
                 .setTextPositiveButton("Onayla", CustomAlertDialog::dismiss,
-                        activity.getResources().getColor(R.color.cad_success_color))
+                        res.getColor(R.color.cad_success_color))
                 .setTextNegativeButton("Bunu bir daha gösterme", CustomAlertDialog::dismiss,
-                        activity.getResources().getColor(R.color.cad_error_color))
+                        res.getColor(R.color.cad_error_color))
                 .show();
 
         String message_2 = "showSimpleDialog(@NonNull String message, int positiveButtonTextColor) " +
                 "fonksiyonu: Mesaj bilgisini ve 'Tamam' butonunun metin rengini parametre olarak " +
                 "alan hazır bir alert dialog tasarımdır. Bu örnekte pozitif buton metin rengi " +
                 "farklı verilmiştir.";
-        CustomAlertDialog.getInstance(activity).showSimpleDialog(message_2, Color.GREEN);
+        CustomAlertDialog.getInstance(context).showSimpleDialog(message_2, Color.GREEN);
 
         String message_3 = "showSimpleDialog(@NonNull String message) fonksiyonu: Sadece mesaj " +
                 "bilgisini parametre olarak alan hazır bir alert dialog tasarımdır. Eğer farklı " +
                 "bir atama yapılmadıysa 'Tamam' butonunun metin rengi mesajın metin rengiyle aynıdır. ";
-        CustomAlertDialog.getInstance(activity).showSimpleDialog(message_3);
+        CustomAlertDialog.getInstance(context).showSimpleDialog(message_3);
     }
 
     /**
@@ -183,7 +182,7 @@ class Tester {
                 "</font>, hiçbir alışveriş ve dostluğun bulunmadığı bir gün gelmeden önce " +
                 "<font color=\"#E6BD9A\">kendilerine rızık olarak verdiğimiz şeylerden <b>Allah yolunda</b> " +
                 "gizlice ve açıktan <b>harcasınlar.</b></font> ﴾İbrâhîm 31﴿";
-        CustomAlertDialog.getInstance(activity)
+        CustomAlertDialog.getInstance(context)
                 .setIcon(ICON)
                 .setMessageFromHtml(htmlMessage)
                 .setPositiveButton("Okudum", DialogFragment::dismiss)
@@ -194,7 +193,7 @@ class Tester {
                 "fonksiyonu:</p> Sade tasarımlı <font color=\"#E6BD9A\"><b>HTML</b> formatında</font> " +
                 "<b>mesaj</b> gösterebilen hazır bir alert dialog tasarımıdır. Bu tasarım pencereyi " +
                 "<b>kapatmak</b> için <b>'Tamam'</b> butonu barındırır.";
-        CustomAlertDialog.getInstance(activity).showSimpleDialogFromHtml(htmlMessage_2);
+        CustomAlertDialog.getInstance(context).showSimpleDialogFromHtml(htmlMessage_2);
     }
 
     /**
@@ -208,7 +207,7 @@ class Tester {
                 "olmaktadır. Bu sebeple yazılımcı dialog pencerelerinde olması gerektiği gibi " +
                 "buton metinlerini kısa seçmelidir. Uzun metinli buton veya ikonlu buton kullanılmak " +
                 "istenirse setVerticalButtons() fonksiyonu kullanılabilir.";
-        CustomAlertDialog alertDialog_1 = CustomAlertDialog.getInstance(activity);
+        CustomAlertDialog alertDialog_1 = CustomAlertDialog.getInstance(context);
         alertDialog_1.setCancelable(false);
         alertDialog_1.setBackground(Color.parseColor("#415569"))
                 .setIcon(ICON, Color.GREEN)
@@ -216,7 +215,7 @@ class Tester {
                 .setPositiveButton("Paylaşma penceresine git", dialog -> {
                     showToast("Pozitif butona basıldı.");
                     dialog.dismiss();
-                }, activity.getResources().getColor(R.color.teal_200), Color.BLUE)
+                }, res.getColor(R.color.teal_200), Color.BLUE)
                 .setNegativeButton("İptal", dialog -> {
                     showToast("Negatif butona basıldı.");
                     dialog.dismiss();
@@ -226,7 +225,7 @@ class Tester {
         String message_2 = "Bütün UI elemanları kullanılmış fakat hiçbir renk ataması yapılmamış " +
                 "bir alert dialog örneğidir. Bu örneğin amacı yazılımcının seçtiği bütün renkleri " +
                 "test etmek içindir.";
-        CustomAlertDialog.getInstance(activity)
+        CustomAlertDialog.getInstance(context)
                 .setIcon(ICON)
                 .setMessage(message_2)
                 .setPositiveButton("Onayla", dialog -> {
@@ -244,13 +243,13 @@ class Tester {
      * Tek butonlu alert dialog örnekleri oluşturur.
      */
     private void testOneButton() {
-        CustomAlertDialog.getInstance(activity)
+        CustomAlertDialog.getInstance(context)
                 .setIcon(ICON)
                 .setMessage("Sadece negatif butonun bulunduğu bir dialog örneğidir.")
                 .setNegativeButton("Silme işlemini başlat", DialogFragment::dismiss)
                 .show();
 
-        CustomAlertDialog.getInstance(activity)
+        CustomAlertDialog.getInstance(context)
                 .setIcon(ICON)
                 .setMessage("Sadece pozitif butonun bulunduğu bir dialog örneğidir.")
                 .setPositiveButton("Seçim penceresine git", DialogFragment::dismiss)
@@ -264,7 +263,7 @@ class Tester {
         String message_1 = "Butonların dikey olarak sıralandığı bir alert dialog örneğidir. " +
                 "Bu örnekte ikon ataması da yapılmıştır. İkon ataması yapıldığı zaman textView'in " +
                 "gravity özelliği centerVertical yapılmaktadır.";
-        CustomAlertDialog.getInstance(activity)
+        CustomAlertDialog.getInstance(context)
                 .setIcon(ICON)
                 .setMessage(message_1)
                 .setVerticalButtons("Paylaşma penceresine git", DialogFragment::dismiss,
@@ -279,7 +278,7 @@ class Tester {
                 "Yoksa dikey buton tasarımının bir anlamı kalmayacaktır. Zira tek butonun " +
                 "olduğu tasarım setNegativeButton() veya setPositiveButton() fonksiyonlarından " +
                 "biri kullanılarak da elde edilebilir.";
-        CustomAlertDialog.getInstance(activity)
+        CustomAlertDialog.getInstance(context)
                 .setMessage(message_2)
                 .setVerticalButtons("Yükleme işlemine geç", DialogFragment::dismiss,
                         "İptal ediyorum", DialogFragment::dismiss)
@@ -290,7 +289,7 @@ class Tester {
      * Farklı buton tasarımlarının aynı anda kullanıldığı alert dialog örnekleri oluşturur.
      */
     private void testMultipleButtonDesign() {
-        CustomAlertDialog.getInstance(activity)
+        CustomAlertDialog.getInstance(context)
                 .setIcon(ICON)
                 .setMessage("Bütün buton tasarımlarının aynı anda " +
                         "kullanıldığı bir alert dialog örneğidir.")
@@ -316,7 +315,7 @@ class Tester {
                         })
                 .show();
 
-        CustomAlertDialog.getInstance(activity)
+        CustomAlertDialog.getInstance(context)
                 .setIcon(ICON)
                 .setMessage("Pozitif butonla textPositive ve textNegative butonların aynı anda " +
                         "kullanıldığı bir alert dialog örneğidir.")
@@ -325,7 +324,7 @@ class Tester {
                 .setTextNegativeButton("Fena değil", DialogFragment::dismiss)
                 .show();
 
-        CustomAlertDialog.getInstance(activity)
+        CustomAlertDialog.getInstance(context)
                 .setMessage("4 tane image butonla sadece negatif butonun aynı anda " +
                         "kullanıldığı bir alert dialog örneğidir.")
                 .setNegativeButton("Pencereyi kapat", DialogFragment::dismiss)
@@ -342,7 +341,7 @@ class Tester {
                         })
                 .show();
 
-        CustomAlertDialog.getInstance(activity)
+        CustomAlertDialog.getInstance(context)
                 .setIcon(ICON)
                 .setMessage("3 tane image butonla pozitif ve negatif butonların aynı anda " +
                         "kullanıldığı bir alert dialog örneğidir.")
@@ -359,7 +358,7 @@ class Tester {
                         })
                 .show();
 
-        CustomAlertDialog.getInstance(activity)
+        CustomAlertDialog.getInstance(context)
                 .setIcon(ICON)
                 .setMessage("Vertical butonlar ile pozitif ve negatif butonların aynı anda " +
                         "kullanıldığı bir alert dialog örneğidir.")
@@ -370,7 +369,7 @@ class Tester {
                         DialogFragment::dismiss, android.R.drawable.ic_menu_delete)
                 .show();
 
-        CustomAlertDialog.getInstance(activity)
+        CustomAlertDialog.getInstance(context)
                 .setMessage("Vertical butonlar ile negatif butonun aynı anda " +
                         "kullanıldığı bir alert dialog örneğidir.")
                 .setNegativeButton("Sil", DialogFragment::dismiss)
@@ -383,7 +382,7 @@ class Tester {
      * ImageButtons tasarımının örneklerini gösteren alert dialog örnekleri oluşturur.
      */
     private void testImageButtons() {
-        CustomAlertDialog.getInstance(activity)
+        CustomAlertDialog.getInstance(context)
                 .setIcon(ICON)
                 .setMessage("Tüm image butonların kullanıldığı bir örnektir.")
                 .setImageButtons(new int[]{
@@ -401,7 +400,7 @@ class Tester {
                         })
                 .show();
 
-        CustomAlertDialog.getInstance(activity)
+        CustomAlertDialog.getInstance(context)
                 .setIcon(ICON)
                 .setMessage("4 image butonun kullanıldığı bir örnektir.")
                 .setImageButtons(new int[]{
@@ -417,7 +416,7 @@ class Tester {
                         })
                 .show();
 
-        CustomAlertDialog.getInstance(activity)
+        CustomAlertDialog.getInstance(context)
                 .setIcon(ICON)
                 .setMessage("3 image butonun kullanıldığı bir örnektir.")
                 .setImageButtons(new int[]{
@@ -431,7 +430,7 @@ class Tester {
                         })
                 .show();
 
-        CustomAlertDialog.getInstance(activity)
+        CustomAlertDialog.getInstance(context)
                 .setMessage("2 image butonun kullanıldığı bir örnektir.")
                 .setImageButtons(new int[]{
                                 R.drawable.cad_ic_check_circle,
@@ -442,7 +441,7 @@ class Tester {
                         })
                 .show();
 
-        CustomAlertDialog.getInstance(activity)
+        CustomAlertDialog.getInstance(context)
                 .setMessage("1 image butonun kullanıldığı bir örnektir.")
                 .setImageButtons(new int[]{
                                 R.drawable.cad_ic_check_circle},
@@ -457,7 +456,7 @@ class Tester {
      */
     private void testItems() {
         String message_1 = "Sizi en iyi hangisi anlatır?";
-        CustomAlertDialog.getInstance(activity)
+        CustomAlertDialog.getInstance(context)
                 .setIcon(ICON, Color.GREEN)
                 .showItems(message_1, smallItems, (dialog, which) -> {
                     showToast("Tıklanan eleman: " + items[which]);
@@ -468,7 +467,7 @@ class Tester {
                 "kullanıcıdan listeden herhangi bir elemanı seçmesi istenebilir. Kullanıcının " +
                 "pencereyi kapatabilmesi için negatif buton hazır olarak bulunmaktadır. Ayrıca " +
                 "bu örnekte cancelable özelliği false yapılmıştır.";
-        CustomAlertDialog alertDialog = CustomAlertDialog.getInstance(activity);
+        CustomAlertDialog alertDialog = CustomAlertDialog.getInstance(context);
         alertDialog.setCancelable(false);
         alertDialog.showItems(message_2, items, (dialog, which) -> {
             showToast("Tıklanan eleman: " + items[which]);
@@ -482,7 +481,7 @@ class Tester {
      */
     private void testSingleChoiceItems() {
         String message_1 = "Metni paylaşmak için bir yöntem seçiniz:";
-        CustomAlertDialog.getInstance(activity)
+        CustomAlertDialog.getInstance(context)
                 .setIcon(android.R.drawable.ic_menu_share)
                 .showSingleChoiceItems(message_1, smallItems, 15, (dialog, which) -> {
                     showToast("Tıklanan eleman: " + items[which]);
@@ -492,7 +491,7 @@ class Tester {
                 "kullanıcıdan listeden herhangi bir elemanı seçmesi istenebilir. Seçme işleminin " +
                 "tamamlanması için kullanıcının pozitif butona basması gerekmektedir. Kullanıcının " +
                 "pencereyi kapatabilmesi için negatif buton hazır olarak bulunmaktadır.";
-        CustomAlertDialog.getInstance(activity)
+        CustomAlertDialog.getInstance(context)
                 .showSingleChoiceItems(message_2, items, 5, (dialog, which) -> {
                     showToast("Tıklanan eleman: " + items[which]);
                 }, "Lorem", DialogFragment::dismiss);
@@ -509,7 +508,7 @@ class Tester {
         }
 
         String message_1 = "Hobilerinizi seçebilirsiniz:";
-        CustomAlertDialog.getInstance(activity)
+        CustomAlertDialog.getInstance(context)
                 .setIcon(android.R.drawable.checkbox_on_background)
                 .showMultiChoiceItems(message_1, smallItems, checkedItems, (dialog, which, isChecked) -> {
                     showToast("Tıklanan eleman: " + items[which] + " - " + isChecked);
@@ -519,7 +518,7 @@ class Tester {
                 "kullanıcıdan listeden çoklu seçim işlemi yapması istenebilir. Seçme işleminin " +
                 "tamamlanması için kullanıcının pozitif butona basması gerekmektedir. Kullanıcının " +
                 "pencereyi kapatabilmesi için negatif buton hazır olarak bulunmaktadır.";
-        CustomAlertDialog.getInstance(activity)
+        CustomAlertDialog.getInstance(context)
                 .showMultiChoiceItems(message_2, items, checkedItems, (dialog, which, isChecked) -> {
                     showToast("Tıklanan eleman: " + items[which] + " - " + isChecked);
                 }, "Lorem", DialogFragment::dismiss);
@@ -548,7 +547,7 @@ class Tester {
     }
 
     private void showToast(String msg) {
-        Toast.makeText(activity, msg, Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
     }
 
 }

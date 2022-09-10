@@ -1,5 +1,7 @@
 package com.ugunay.customalertdialog;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Build;
@@ -122,22 +124,22 @@ public class CustomAlertDialog extends DialogFragment {
     /**
      * Factory method.
      *
-     * @param activity parent activity.
+     * @param context parent context.
      * @return a new instance of this class.
      */
     @NonNull
-    public static CustomAlertDialog getInstance(@NonNull AppCompatActivity activity) {
-        return new CustomAlertDialog(activity);
+    public static CustomAlertDialog getInstance(@NonNull Context context) {
+        return new CustomAlertDialog(context);
     }
 
-    public CustomAlertDialog(@NonNull AppCompatActivity activity) {
-        this.activity = activity;
-        res = activity.getResources();
-        binding = CustomAlertDialogBinding.inflate(activity.getLayoutInflater());
+    public CustomAlertDialog(@NonNull Context context) {
+        this.context = context;
+        res = context.getResources();
+        binding = CustomAlertDialogBinding.inflate(((Activity) context).getLayoutInflater());
         setBackground(bgColor);
     }
 
-    private final AppCompatActivity activity;
+    private final Context context;
     private final Resources res;
     private CustomAlertDialogBinding binding;
 
@@ -371,7 +373,7 @@ public class CustomAlertDialog extends DialogFragment {
         binding.txtCadMessage.setTextColor(textColor);
 
         if (fontResId != R.font.imprima) {
-            binding.txtCadMessage.setTypeface(ResourcesCompat.getFont(activity, fontResId));
+            binding.txtCadMessage.setTypeface(ResourcesCompat.getFont(context, fontResId));
         }
     }
 //--------------------------------------------------------------------------------------------------
@@ -436,7 +438,7 @@ public class CustomAlertDialog extends DialogFragment {
             binding.txtPositiveBtn.setTextColor(textColor);
 
             if (fontResId != R.font.imprima) {
-                binding.txtPositiveBtn.setTypeface(ResourcesCompat.getFont(activity, fontResId));
+                binding.txtPositiveBtn.setTypeface(ResourcesCompat.getFont(context, fontResId));
             }
         }
         binding.pnlButtons.setVisibility(View.VISIBLE);
@@ -485,7 +487,7 @@ public class CustomAlertDialog extends DialogFragment {
                     onClickListener.onClick(CustomAlertDialog.this));
 
             if (fontResId != R.font.imprima) {
-                binding.txtTextPositiveBtn.setTypeface(ResourcesCompat.getFont(activity, fontResId));
+                binding.txtTextPositiveBtn.setTypeface(ResourcesCompat.getFont(context, fontResId));
             }
         }
         return this;
@@ -553,7 +555,7 @@ public class CustomAlertDialog extends DialogFragment {
             binding.txtNegativeBtn.setTextColor(textColor);
 
             if (fontResId != R.font.imprima) {
-                binding.txtNegativeBtn.setTypeface(ResourcesCompat.getFont(activity, fontResId));
+                binding.txtNegativeBtn.setTypeface(ResourcesCompat.getFont(context, fontResId));
             }
         }
         binding.pnlButtons.setVisibility(View.VISIBLE);
@@ -603,7 +605,7 @@ public class CustomAlertDialog extends DialogFragment {
                     onClickListener.onClick(CustomAlertDialog.this));
 
             if (fontResId != R.font.imprima) {
-                binding.txtTextNegativeBtn.setTypeface(ResourcesCompat.getFont(activity, fontResId));
+                binding.txtTextNegativeBtn.setTypeface(ResourcesCompat.getFont(context, fontResId));
             }
         }
         return this;
@@ -662,7 +664,7 @@ public class CustomAlertDialog extends DialogFragment {
             binding.txtVerticalPositiveBtn.setTextColor(positiveBtnTextColor);
 
             if (fontResId != R.font.imprima) {
-                binding.txtVerticalPositiveBtn.setTypeface(ResourcesCompat.getFont(activity, fontResId));
+                binding.txtVerticalPositiveBtn.setTypeface(ResourcesCompat.getFont(context, fontResId));
             }
         }
         if (positiveButtonIconResId != 0) {
@@ -680,7 +682,7 @@ public class CustomAlertDialog extends DialogFragment {
             binding.txtVerticalNegativeBtn.setTextColor(negativeBtnTextColor);
 
             if (fontResId != R.font.imprima) {
-                binding.txtVerticalNegativeBtn.setTypeface(ResourcesCompat.getFont(activity, fontResId));
+                binding.txtVerticalNegativeBtn.setTypeface(ResourcesCompat.getFont(context, fontResId));
             }
         }
         if (negativeButtonIconResId != 0) {
@@ -958,8 +960,8 @@ public class CustomAlertDialog extends DialogFragment {
                           @NonNull CharSequence[] items,
                           @NonNull OnItemClickListener onItemClickListener) {
         setMessage(message);
-        ItemsAdapter adapter = new ItemsAdapter(items, onItemClickListener, this,
-                messageTextColor, activity, fontResId);
+        ItemsAdapter adapter = new ItemsAdapter(
+                items, onItemClickListener, this, messageTextColor, fontResId);
         getRecyclerView().setAdapter(adapter);
         setNegativeButton(res.getString(R.string.cancel), DialogFragment::dismiss);
         show();
@@ -988,8 +990,8 @@ public class CustomAlertDialog extends DialogFragment {
                                       @NonNull String positiveButtonTitle,
                                       @NonNull OnClickListener positiveButtonOnClickListener) {
         setMessage(message);
-        SingleChoiceItemsAdapter adapter = new SingleChoiceItemsAdapter(items, checkedItemIndex,
-                onItemClickListener, this, messageTextColor, activity, fontResId);
+        SingleChoiceItemsAdapter adapter = new SingleChoiceItemsAdapter(
+                items, checkedItemIndex, onItemClickListener, this, messageTextColor, fontResId);
         getRecyclerView().setAdapter(adapter);
         setPositiveButton(positiveButtonTitle, positiveButtonOnClickListener);
         setNegativeButton(res.getString(R.string.cancel), DialogFragment::dismiss);
@@ -1019,8 +1021,8 @@ public class CustomAlertDialog extends DialogFragment {
                                      @NonNull String positiveButtonTitle,
                                      @NonNull OnClickListener positiveButtonOnClickListener) {
         setMessage(message);
-        MultiChoiceItemsAdapter adapter = new MultiChoiceItemsAdapter(items, checkedItems,
-                onMultiChoiceClickListener, this, messageTextColor, activity, fontResId);
+        MultiChoiceItemsAdapter adapter = new MultiChoiceItemsAdapter(
+                items, checkedItems, onMultiChoiceClickListener, this, messageTextColor, fontResId);
         getRecyclerView().setAdapter(adapter);
         setPositiveButton(positiveButtonTitle, positiveButtonOnClickListener);
         setNegativeButton(res.getString(R.string.cancel), DialogFragment::dismiss);
@@ -1032,8 +1034,8 @@ public class CustomAlertDialog extends DialogFragment {
      */
     @NonNull
     private RecyclerView getRecyclerView() {
-        RecyclerView recyclerView = new RecyclerView(activity);
-        recyclerView.setLayoutManager(new LinearLayoutManager(activity));
+        RecyclerView recyclerView = new RecyclerView(context);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setHasFixedSize(true);
         recyclerView.setPadding(0, 0, 0,
                 res.getDimensionPixelSize(com.intuit.sdp.R.dimen._16sdp));
@@ -1049,7 +1051,7 @@ public class CustomAlertDialog extends DialogFragment {
      * Dialog penceresini açar.
      */
     public void show() {
-        show(activity.getSupportFragmentManager(), TAG);
+        show(((AppCompatActivity) context).getSupportFragmentManager(), TAG);
     }
 
     @Override
