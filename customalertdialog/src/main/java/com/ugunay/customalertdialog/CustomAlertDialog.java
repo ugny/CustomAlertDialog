@@ -226,14 +226,16 @@ public class CustomAlertDialog extends DialogFragment {
      * Alert dialog ikonunu set eder.
      *
      * @param resId icon resources id.
-     * @param tint  icon rengi.
+     * @param tint  icon rengi. Sıfır olursa tint bilgisi uygulanmayacak demektir.
      * @return this.
      */
     public CustomAlertDialog setIcon(int resId, int tint) {
         if (resId != 0) {
             binding.imgCadIcon.setVisibility(View.VISIBLE);
             binding.imgCadIcon.setImageResource(resId);
-            binding.imgCadIcon.setColorFilter(tint);
+            if (tint != 0) {
+                binding.imgCadIcon.setColorFilter(tint);
+            }
         }
         return this;
     }
@@ -893,6 +895,7 @@ public class CustomAlertDialog extends DialogFragment {
      * @param htmlMessage <code>Html</code> formatında dialog mesajı.
      */
     public void showSimpleDialogFromHtml(@NonNull String htmlMessage) {
+        setIcon(R.drawable.cad_ic_info);
         setMessageFromHtml(htmlMessage);
         setTextPositiveButton(res.getString(R.string.ok), DialogFragment::dismiss);
         show();
